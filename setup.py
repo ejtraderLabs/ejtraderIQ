@@ -4,7 +4,7 @@ from setuptools import (setup, find_packages)
 
 setup(
     name="ejtraderIQ",
-    version="0.0.4",
+    version="0.0.5",
     packages=find_packages(),
     install_requires=["pylint","requests","websocket-client==0.56"],
     include_package_data = True,

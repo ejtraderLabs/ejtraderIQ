@@ -1,9 +1,10 @@
 from .stable_api import IQ_Option
 import logging
 import time
+from datetime import datetime
 import pandas as pd
 import os
-
+from dateutil import tz
 
 class IQOption:
     __version__ = "7.8.9.1"
@@ -114,9 +115,27 @@ class IQOption:
             exit(0)
         
         return id   
+
+
+    def trade(self, contract, symbol, timeframe, direction, turbo=None):
+        timeframe = self.timeframe_to_integer(timeframe)
+        if turbo:
+            done, id = self.iq.buy(contract, symbol, direction, int(timeframe))
+        else:
+            done, id = self.iq.buy_digital_spot(symbol, contract, direction, int(timeframe))
+        
+        if not done:
+            print('Error put')
+            print(done, id)
+            exit(0)
+        
+        return done, id   
     
     def balance(self):
         return self.iq.get_balance()
+
+    def get_all_open_time(self):
+        return self.iq.get_all_open_time()
 
     def isOpen(self):
         isOpen = []
@@ -149,7 +168,7 @@ class IQOption:
                     payout = data
                     self.iq.unsubscribe_strike_list(symbol, 1)
                     break
-        return round(payout)
+        return payout
 
     def remaning(self, timeframe):
         t = self.timeframe_to_integer(timeframe)
@@ -167,7 +186,7 @@ class IQOption:
                     if check==True:
                         break
     
-        return round(win,2) 
+        return win
 
 
     def powerbar_live(self, symbol):
@@ -186,6 +205,27 @@ class IQOption:
         for _ in range(2):
             x = self.iq.get_candles(symbol, int(timeframe), candles, timestamp)
             timestamp = int(x[0]["from"]) - 1
+            velas += x
+
+        dataframe = pd.DataFrame(velas)
+        dataframe.sort_values(by=["from"], inplace=True, ascending=True)
+        dataframe.drop(dataframe.tail(1).index, inplace=True)
+        dataframe = dataframe.rename(columns = {'from': 'date', 'min': 'low','max':'high'})
+        dataframe = dataframe.set_index(['date'])
+        dataframe.index = pd.to_datetime(dataframe.index, unit='s')
+        return dataframe[["open", "high", "low","close", "volume"]]
+
+
+
+    def latest_candles(self, symbol, timeframe,candles):
+        
+        timeframe = self.timeframe_to_seconds(timeframe)
+        velas = []
+
+        for _ in range(2):
+            timestamp = self.iq.get_server_timestamp()
+            x = self.iq.get_candles(symbol, int(timeframe), candles, timestamp)
+            timestamp = int(x[0]["from"]) 
             velas += x
 
         dataframe = pd.DataFrame(velas)
@@ -227,9 +267,20 @@ class IQOption:
             main.index = pd.to_datetime(main.index, unit='s')
         return main
 
+    def get_candles(self,symbol,timeframe,interval):
+        timestamp = self.iq.get_server_timestamp()
+        return self.iq.get_candles(symbol,timeframe,interval,timestamp)
 
 
+    def server_time(self):
+        return self.timestamp_converter(
+                    self.iq.get_server_timestamp()
+                )
     
 
-        
+    def timestamp_converter(self,x):
+        time = datetime.strptime(
+            datetime.utcfromtimestamp(x).strftime("%Y-%m-%d %H:%M:%S"), "%Y-%m-%d %H:%M:%S"
+        )
+        return time   
         
