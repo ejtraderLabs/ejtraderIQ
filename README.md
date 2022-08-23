@@ -61,7 +61,7 @@ date
 ```
 ##### Unsubscribe quote stream  
 ```python
-api.subscribe(symbol,timeframe)
+api.unsubscribe(symbol,timeframe)
 
 # Output
 "Unsubscribed from EURUSD"
