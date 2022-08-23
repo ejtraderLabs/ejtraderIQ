@@ -8,6 +8,7 @@
 - [x] check open Markets
 - [x] remaning time
 - [x] real time quote
+- [x] ohlc dataframe history
 - [x] payout
 
 
