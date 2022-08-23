@@ -154,7 +154,7 @@ class IQOption:
                 }
                 isOpen.append(result)
             
-        return isOpen
+        return pd.DataFrame(isOpen)
 
     def payout(self, symbol, turbo=None):
         if turbo:
@@ -200,16 +200,16 @@ class IQOption:
     def history(self, symbol, timeframe,candles):
         timestamp = self.iq.get_server_timestamp()
         timeframe = self.timeframe_to_seconds(timeframe)
-        velas = []
+        
 
-        for _ in range(2):
-            x = self.iq.get_candles(symbol, int(timeframe), candles, timestamp)
-            timestamp = int(x[0]["from"]) - 1
-            velas += x
+       
+        x = self.iq.get_candles(symbol, int(timeframe), candles, timestamp)
+        timestamp = int(x[0]["from"]) - 1
+        
 
-        dataframe = pd.DataFrame(velas)
+        dataframe = pd.DataFrame(x)
         dataframe.sort_values(by=["from"], inplace=True, ascending=True)
-        dataframe.drop(dataframe.tail(1).index, inplace=True)
+        # dataframe.drop(dataframe.tail(1).index, inplace=True)
         dataframe = dataframe.rename(columns = {'from': 'date', 'min': 'low','max':'high'})
         dataframe = dataframe.set_index(['date'])
         dataframe.index = pd.to_datetime(dataframe.index, unit='s')
@@ -239,18 +239,19 @@ class IQOption:
 
 
 
-    def start_price_stream(self,symbol,timeframe):
+    def subscribe(self,symbol,timeframe):
         timeframe = self.timeframe_to_seconds(timeframe)
         self.iq.start_candles_stream(symbol,int(timeframe),1)
         print("starting stream")
         time.sleep(0.5)
         self.vela = self.iq.get_realtime_candles(symbol,int(timeframe))
 
-    def stop_price_stream(self,symbol,timeframe):
+    def unsubscribe(self,symbol,timeframe):
         timeframe = self.timeframe_to_seconds(timeframe)
         self.iq.stop_candles_stream(symbol,int(timeframe))
+        return f"Unsubscribed from {symbol} "
 
-    def realtime_data(self):
+    def quote(self):
        
         for velas in  list(self.vela):
             date = self.vela[velas]["from"]
