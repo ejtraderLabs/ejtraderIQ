@@ -220,15 +220,15 @@ class IQOption:
     def latest_candles(self, symbol, timeframe,candles):
         
         timeframe = self.timeframe_to_seconds(timeframe)
-        velas = []
+        
 
-        for _ in range(2):
-            timestamp = self.iq.get_server_timestamp()
-            x = self.iq.get_candles(symbol, int(timeframe), candles, timestamp)
-            timestamp = int(x[0]["from"]) 
-            velas += x
+        
+        timestamp = self.iq.get_server_timestamp()
+        x = self.iq.get_candles(symbol, int(timeframe), candles, timestamp)
+        timestamp = int(x[0]["from"]) 
+        
 
-        dataframe = pd.DataFrame(velas)
+        dataframe = pd.DataFrame(x)
         dataframe.sort_values(by=["from"], inplace=True, ascending=True)
         dataframe.drop(dataframe.tail(1).index, inplace=True)
         dataframe = dataframe.rename(columns = {'from': 'date', 'min': 'low','max':'high'})
