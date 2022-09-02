@@ -204,12 +204,12 @@ class IQOption:
 
        
         x = self.iq.get_candles(symbol, int(timeframe), candles, timestamp)
-        timestamp = int(x[0]["from"]) - 1
+        timestamp = int(x[0]["from"]) -1
         
 
         dataframe = pd.DataFrame(x)
         dataframe.sort_values(by=["from"], inplace=True, ascending=True)
-        # dataframe.drop(dataframe.tail(1).index, inplace=True)
+        dataframe.drop(dataframe.tail(1).index, inplace=True)
         dataframe = dataframe.rename(columns = {'from': 'date', 'min': 'low','max':'high'})
         dataframe = dataframe.set_index(['date'])
         dataframe.index = pd.to_datetime(dataframe.index, unit='s')
@@ -225,12 +225,12 @@ class IQOption:
         
         timestamp = self.iq.get_server_timestamp()
         x = self.iq.get_candles(symbol, int(timeframe), candles, timestamp)
-        timestamp = int(x[0]["from"]) 
+        timestamp = int(x[0]["from"])  - 1
         
 
         dataframe = pd.DataFrame(x)
         dataframe.sort_values(by=["from"], inplace=True, ascending=True)
-        dataframe.drop(dataframe.tail(1).index, inplace=True)
+        #dataframe.drop(dataframe.tail(1).index, inplace=True)
         dataframe = dataframe.rename(columns = {'from': 'date', 'min': 'low','max':'high'})
         dataframe = dataframe.set_index(['date'])
         dataframe.index = pd.to_datetime(dataframe.index, unit='s')
