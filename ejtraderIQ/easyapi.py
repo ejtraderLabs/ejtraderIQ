@@ -205,6 +205,7 @@ class IQOption:
 
 
     def history(self, symbol, timeframe,candles):
+        candles = candles + 1
         timestamp = self.iq.get_server_timestamp()
         timeframe = self.timeframe_to_seconds(timeframe)
         
