@@ -38,7 +38,7 @@ from ejtraderIQ import IQOption
 ### Login to IQ Options
 
 ```python
-# account type DEMO OR LIVE
+# account type DEMO OR REAL
 api = IQOption('email','passowrd','DEMO') 
 
 symbol = "EURUSD"
