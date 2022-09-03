@@ -10,6 +10,8 @@
 - [x] real time quote
 - [x] ohlc dataframe history
 - [x] payout
+- [x] get server time
+- [x] get powerbar - market depth
 
 
 ## Installation
@@ -135,6 +137,35 @@ print(("Payout: {:.2f}%".format(payout)))
  expire = api.remaning(timeframe)
  print(f'Remaning : {expire}')
 ```
+##### Market depth
+```python
+# start streaming
+ api.powerbar_start(symbol)
+
+# get live data
+ api.powerbar_get(symbol)
+
+# get all history from the time start streaming
+ api.powerbar_get_all()
+
+# stop streaming
+api.powerbar_stop(symbol)
+```
+
+##### Server time
+```python
+ 
+st = api.server_tim()
+
+st.year
+st.day
+st.hour
+st.minute
+st.second
+ 
+
+```
+
 ##### Check Win
 ```python
 api.checkwin(id)

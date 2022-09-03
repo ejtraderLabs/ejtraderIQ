@@ -189,11 +189,20 @@ class IQOption:
         return win
 
 
-    def powerbar_live(self, symbol):
+    def powerbar_start(self, symbol):
         return self.iq.start_mood_stream(symbol)
+    
+    def powerbar_stop(self, symbol):
+        return self.iq.stop_mood_stream(symbol)
+    
+    def powerbar_get(self, symbol):
+        return self.iq.get_traders_mood(symbol)
 
     def powerbar_history(self, symbol):
-        return self.iq.get_traders_mood(symbol)
+        return self.iq.get_all_traders_mood()
+    
+    def powerbar_history(self, symbol):
+        return self.iq.get_all_traders_mood()
 
 
 
