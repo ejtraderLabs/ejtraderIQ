@@ -155,7 +155,7 @@ api.powerbar_stop(symbol)
 ##### Server time
 ```python
  
-st = api.server_tim()
+st = api.server_time()
 
 st.year
 st.day
