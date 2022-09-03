@@ -142,7 +142,7 @@ print(("Payout: {:.2f}%".format(payout)))
 # start streaming
  api.powerbar_start(symbol)
 
-# get live data
+# get live data SELL side %
  api.powerbar_get(symbol)
 
 # get all history from the time start streaming
