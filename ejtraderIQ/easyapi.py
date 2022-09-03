@@ -198,11 +198,9 @@ class IQOption:
     def powerbar_get(self, symbol):
         return self.iq.get_traders_mood(symbol)
 
-    def powerbar_history(self, symbol):
+    def powerbar_get_all(self):
         return self.iq.get_all_traders_mood()
     
-    def powerbar_history(self, symbol):
-        return self.iq.get_all_traders_mood()
 
 
 
