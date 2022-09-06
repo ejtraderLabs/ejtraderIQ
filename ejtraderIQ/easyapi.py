@@ -212,7 +212,7 @@ class IQOption:
 
        
         x = self.iq.get_candles(symbol, int(timeframe), candles, timestamp)
-        timestamp = int(x[0]["from"]) -1
+        
         
 
         dataframe = pd.DataFrame(x)
