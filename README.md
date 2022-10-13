@@ -184,7 +184,7 @@ else:
     
 # example check win Turbo
 id = api.buy(volume,symbol,timeframe,turbo=True)
-win = api.checkwin(id)
+win = api.checkwin(id,turbo=True)
 
 if win > 0:
     print(("WIN"+'\n'))
