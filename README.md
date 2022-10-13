@@ -170,8 +170,20 @@ st.second
 ```python
 api.checkwin(id)
 
-# example check win
+# example check win Digital 
 id = api.buy(volume,symbol,timeframe)
+win = api.checkwin(id)
+
+if win > 0:
+    print(("WIN"+'\n'))
+elif win < 0:                                            
+    print(("LOSS"+'\n'))
+else:
+    print(('Tied '+'\n'))
+    
+    
+# example check win Turbo
+id = api.buy(volume,symbol,timeframe,turbo=True)
 win = api.checkwin(id)
 
 if win > 0:
