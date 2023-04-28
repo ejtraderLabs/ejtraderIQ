@@ -1,6 +1,6 @@
 ![Pypi Publish](https://github.com/ejtraderLabs/ejtraderIQ/actions/workflows/python-publish.yml/badge.svg)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/ejtraderLabs/ejtraderIQ)
-
+[![License](https://img.shields.io/github/license/ejtraderLabs/ejtraderIQ)](https://github.com/ejtraderLabs/ejtraderIQ/blob/main/LICENSE)
 # IQoption API
 
 ### ToDo
