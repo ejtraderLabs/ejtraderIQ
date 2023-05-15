@@ -15,16 +15,20 @@ def Martingale(entry_value, payout):
 api = IQOption('email', 'password', 'DEMO') # DEMO OR REAL
 
 # Parameters
-pair = "EURUSD" # or "EURUSD-OTC"
+pair = "EURUSD"  # or "EURUSD-OTC"
 timeframe = "M1"
 operation = 1  # 1 for "Digital", 2 for "Turbo"
 entry_value_b = 1
 stop_gain = 100
 stop_loss = 30
-martingale = 2
+martingale = 3
 profit = 0
 mhi_type = 1  # 1 for "MHI", 2 for "MHI2"
 enter = True
+
+# Additional parameters to track win/loss rate
+total_trades = 0
+winning_trades = 0
 
 while True:
     if enter:
@@ -57,11 +61,17 @@ while True:
                 win = api.checkwin(id)
 
                 if win is not None:
+                    total_trades += 1
                     value = win if win > 0 else float('-' + str(abs(entry_value)))
+                    if value > 0:
+                        winning_trades += 1
                     profit += round(value, 2)
 
                     print('Trade result: ', end='')
                     print('WIN /' if value > 0 else 'LOSS /' , round(value, 2) ,'/', round(profit, 2),('/ '+str(i)+ ' GALE' if i > 0 else '' ))
+
+                    win_loss_rate = (winning_trades / total_trades) * 100
+                    print(f'Win/Loss Rate: {win_loss_rate:.2f}%')
 
                     entry_value = Martingale(entry_value, api.payout(pair))
 
@@ -72,4 +82,4 @@ while True:
                 else:
                     print('\nERROR IN TRADE EXECUTION\n\n')
 
-    time.sleep(0.5)
+    time.sleep
