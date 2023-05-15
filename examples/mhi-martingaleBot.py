@@ -23,7 +23,7 @@ stop_gain = 100
 stop_loss = 30
 martingale = 2
 profit = 0
-mhi_type = 2  # 1 for "MHI", 2 for "MHI2"
+mhi_type = 1  # 1 for "MHI", 2 for "MHI2"
 enter = True
 
 while True:
