@@ -16,6 +16,10 @@
 - [x] get server time
 - [x] get powerbar - market depth
 
+MHI Martingale Bot Example
+
+You can find the bot under the examples directory in our repository here.
+
 
 ## Installation
 #### Tested on python 3.7 to 3.9
