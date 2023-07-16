@@ -12,7 +12,7 @@ def stop_profit_loss(profit, stop_gain, stop_loss):
 def Martingale(entry_value, payout):
     return round(entry_value * 2.2, 2)
 
-api = IQOption('email', 'password', 'DEMO') # DEMO OR REAL
+api = IQOption("email", "password", "DEMO") # DEMO OR REAL
 
 # Parameters
 pair = "EURUSD"  # or "EURUSD-OTC"
